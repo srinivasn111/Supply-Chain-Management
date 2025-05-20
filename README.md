@@ -32,8 +32,8 @@ o	COLLEGE NAME: SRI KRISHNA COLLEGE OF ENGINEERING
 
        K. SRINIVASAN
 team members, 
-       k. THULASIDASS
-       p. HEMALATHA
+       k. THULASIDASS 
+       P. HEMALATHA
 
 
 
