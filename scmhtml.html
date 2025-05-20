@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCM Management Interface</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h1,
+        h2 {
+            color: #333;
+        }
+
+        .module-button {
+            padding: 10px 15px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            background-color: #eee;
+        }
+
+        .module-content {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .input-group {
+            margin-bottom: 10px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        select {
+            width: calc(100% - 12px);
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .data-table th,
+        .data-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .alert {
+            padding: 10px;
+            background-color: #ffcccc;
+            border: 1px solid #ff9999;
+            color: #880000;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>SCM Management Interface</h1>
+
+        <div>
+            <button class="module-button" onclick="showModule('demandForecasting')">Demand Forecasting</button>
+            <button class="module-button" onclick="showModule('visibilityPlatform')">Visibility Platform</button>
+            <button class="module-button" onclick="showModule('logisticsOptimization')">Logistics Optimization</button>
+            <button class="module-button" onclick="showModule('riskManagement')">Risk Management</button>
+        </div>
+
+        <div id="demandForecasting" class="module-content hidden">
+            <h2>Demand Forecasting</h2>
+            <div class="input-group">
+                <label for="product-df">Product ID:</label>
+                <input type="text" id="product-df" placeholder="Enter Product ID"
+                    style="width: 98%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;">
+            </div>
+            <div class="input-group">
+                <label for="date-df">Forecast Date:</label>
+                <input type="date" id="date-df"
+                    style="width: 98%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;">
+            </div>
+            <button onclick="generateForecast()"
+                style="padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; background-color: #007bff; color: white;">Generate
+                Forecast</button>
+            <div id="forecast-results"></div>
+        </div>
+
+        <div id="visibilityPlatform" class="module-content hidden">
+            <h2>Visibility Platform</h2>
+            <div class="input-group">
+                <label for="tracking-vp">Tracking ID:</label>
+                <input type="text" id="tracking-vp" placeholder="Enter Tracking ID"
+                    style="width: 98%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;">
+            </div>
+            <button onclick="trackShipment()"
+                style="padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; background-color: #007bff; color: white;">Track
+                Shipment</button>
+            <div id="shipment-details"></div>
+        </div>
+
+        <div id="logisticsOptimization" class="module-content hidden">
+            <h2>Logistics Optimization</h2>
+            <div class="input-group">
+                <label for="departure-lo">Departure Location:</label>
+                <input type="text" id="departure-lo" placeholder="Enter Departure Location"
+                    style="width: 98%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;">
+            </div>
+            <div class="input-group">
+                <label for="arrival-lo">Arrival Location:</label>
+                <input type="text" id="arrival-lo" placeholder="Enter Arrival Location"
+                    style="width: 98%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;">
+            </div>
+            <button onclick="optimizeRoute()"
+                style="padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; background-color: #007bff; color: white;">Optimize
+                Route</button>
+            <div id="route-optimization"></div>
+        </div>
+
+        <div id="riskManagement" class="module-content hidden">
+            <h2>Risk Management</h2>
+            <div class="input-group">
+                <label for="risk-factor-rm">Risk Factor:</label>
+                <select id="risk-factor-rm"
+                    style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;">
+                    <option value="supplier">Supplier Risk</option>
+                    <option value="logistics">Logistics Risk</option>
+                    <option value="demand">Demand Volatility</option>
+                </select>
+            </div>
+            <button onclick="analyzeRisk()"
+                style="padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; background-color: #007bff; color: white;">Analyze
+                Risk</button>
+            <div id="risk-analysis"></div>
+        </div>
+
+        <div class="alert">
+            <p><strong>Note:</strong> This is a basic user interface mockup. Actual functionality requires backend
+                integration and AI model implementation.</p>
+        </div>
+    </div>
+
+    <script>
+        function showModule(moduleId) {
+            const modules = document.querySelectorAll('.module-content');
+            modules.forEach(module => {
+                module.classList.add('hidden');
+            });
+            document.getElementById(moduleId).classList.remove('hidden');
+        }
+
+        function generateForecast() {
+            const productId = document.getElementById('product-df').value;
+            const forecastDate = document.getElementById('date-df').value;
+            document.getElementById('forecast-results').innerText = `Generating forecast for Product ID: ${productId} on ${forecastDate}...`;
+        }
+
+        function trackShipment() {
+            const trackingId = document.getElementById('tracking-vp').value;
+            document.getElementById('shipment-details').innerText = `Tracking shipment with ID: ${trackingId}...`;
+        }
+
+        function optimizeRoute() {
+            const departure = document.getElementById('departure-lo').value;
+            const arrival = document.getElementById('arrival-lo').value;
+            document.getElementById('route-optimization').innerText = `Optimizing route from ${departure} to ${arrival}...`;
+        }
+
+        function analyzeRisk() {
+            const riskFactor = document.getElementById('risk-factor-rm').value;
+            document.getElementById('risk-analysis').innerText = `Analyzing risk for: ${riskFactor}...`;
+        }
+
+        showModule('demandForecasting');
+    </script>
+</body>
+
+</html>
